@@ -1,22 +1,17 @@
 <?php
-	/**
-	 * @package Spiro Page Blocks
-	 * @author Spiro
-	 * @version 0.0.3
-	 * @filelocation: wp-content/plugins/spiro-page-blocks/spiro-page-blocks.php
-	 */
-	/*
-		Plugin Name: Spiro Page Blocks
-		Description: Add content-type page-blocks, and shortcode
-		Version: 0.0.3
-		Author: Spiro
-		Author URI: https://spiro.se
-		Text Domain: spiro_page_blocks
-		Domain Path: /lang
-	*/
 
-	class SpiroPageBlocks
+	namespace SpiroAB;
+
+	/**
+	 * Class PageBlocks
+	 * @package SpiroAB
+	 */
+	class PageBlocks
 	{
+		/**
+		 * PageBlocks constructor.
+		 * Register hooks and shortcodes
+		 */
 		public function __construct()
 		{
 			add_action( 'init', [$this, 'init'] );
@@ -25,24 +20,27 @@
 			add_shortcode( 'column', [$this, 'column_shortcode'] );
 		}
 
+		/**
+		 * Register post-type page-block
+		 */
 		public function init()
 		{
-			load_plugin_textdomain('spiro_page_blocks', FALSE, dirname(plugin_basename(__FILE__)) . '/lang/');
+			load_plugin_textdomain('page_blocks', FALSE, dirname(plugin_basename(__FILE__)) . '/lang/');
 			register_post_type(
 				'page-block',
 				[
 					'labels' => [
-						'name' => __('Page blocks', 'spiro_page_blocks'),
-						'singular_name' => __('Page block', 'spiro_page_blocks'),
-						'add_new' => __('Create', 'spiro_page_blocks'),
-						'add_new_item' => __('Create page block', 'spiro_page_blocks'),
-						'edit_item' => __('Edit page block', 'spiro_page_blocks'),
-						'new_item' => __('Create page block', 'spiro_page_blocks'),
-						'all_items' => __('All page blocks', 'spiro_page_blocks'),
-						'view_item' => __('Show page block', 'spiro_page_blocks'),
-						'search_items' => __('Search page block', 'spiro_page_blocks'),
-						'not_found' => __('page block not found', 'spiro_page_blocks'),
-						'menu_name' => __('Page blocks', 'spiro_page_blocks'),
+						'name' => __('Page blocks', 'page_blocks'),
+						'singular_name' => __('Page block', 'page_blocks'),
+						'add_new' => __('Create', 'page_blocks'),
+						'add_new_item' => __('Create page block', 'page_blocks'),
+						'edit_item' => __('Edit page block', 'page_blocks'),
+						'new_item' => __('Create page block', 'page_blocks'),
+						'all_items' => __('All page blocks', 'page_blocks'),
+						'view_item' => __('Show page block', 'page_blocks'),
+						'search_items' => __('Search page block', 'page_blocks'),
+						'not_found' => __('page block not found', 'page_blocks'),
+						'menu_name' => __('Page blocks', 'page_blocks'),
 					],
 					'public' => TRUE,
 					'capability_type' => 'page',
@@ -64,6 +62,14 @@
 			);
 		}
 
+		/**
+		 * shortcdode pageblocks
+		 * list all pageblocks in a given category
+		 *
+		 * @param string[] $attributes class, cat: category-id or category-slug
+		 *
+		 * @return string
+		 */
 		public function shortcode($attributes)
 		{
 			$default_attributes = [
@@ -112,7 +118,7 @@
 
 			do_action( 'page_part_list', $category, 'page-block');
 
-			$query = new WP_Query( $filters );
+			$query = new \WP_Query( $filters );
 
 			$classes = implode(' ', $classes);
 			/**
@@ -185,9 +191,20 @@
 
 			$html_foot['foot'] = '</div>';
 
+			/** @noinspection AdditionOperationOnArraysInspection */
 			return implode(PHP_EOL, $html_top + $html_main + $html_foot);
 		}
 
+		/**
+		 * shortcode box
+		 * just put it in a div with the class box
+		 * useful to put columns in
+		 *
+		 * @param string[] $attributes class
+		 * @param string $content
+		 *
+		 * @return string
+		 */
 		public function box_shortcode($attributes, $content)
 		{
 			$default_attributes = [
@@ -202,11 +219,19 @@
 			return '<div class="box ' . $custom_class .'">' . apply_filters('the_content', $content) . '</div>';
 		}
 
+		/**
+		 * shortcode column
+		 * just put it in a div with the class column
+		 * can be used indside a box
+		 *
+		 * @param string[] $attributes ignored
+		 * @param string $content
+		 *
+		 * @return string
+		 */
 		public function column_shortcode($attributes, $content)
 		{
 			return '<div class="column">' . apply_filters('the_content', $content) . '</div>';
 		}
 	}
-	
-	new SpiroPageBlocks();
 
