@@ -3,13 +3,13 @@
 	/**
 	 * @package Spiro Page Blocks
 	 * @author Puggan Sundragon <puggan@spiro.se>
-	 * @version 1.0.0
+	 * @version 1.0.1
 	 */
 
 	/*
 		Plugin Name: Spiro Page Blocks
 		Description: A simple post type that can be listed on pages using shortcode
-		Version: 1.0.0
+		Version: 1.0.1
 		Author: Puggan Sundragon <puggan@spiro.se>
 		Author URI: https://spiro.se
 		Text Domain: page_blocks
