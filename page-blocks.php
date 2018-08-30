@@ -17,6 +17,6 @@
 	*/
 
 	namespace SpiroAB;
-
+	require_once __DIR__ . '/PageBlocks.php';
 	new PageBlocks();
 
