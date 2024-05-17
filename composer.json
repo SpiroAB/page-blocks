@@ -1,9 +1,9 @@
 {
-  "name": "SpiroAB/page-blocks",
+  "name": "spiroab/page-blocks",
   "description": "A simple post type that can be listed on pages using shortcode",
   "type": "wordpress-plugin",
   "require": {
     "composer/installers": "~1.0",
-    "SpiroAB/wp_version_tracker": "~1.0"
+    "spiroab/wp_version_tracker": "~1.0"
   }
 }
