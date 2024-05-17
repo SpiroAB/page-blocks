@@ -212,6 +212,8 @@
 			];
 			$attributes = shortcode_atts($default_attributes, $attributes);
 
+            $custom_class = '';
+
 			if ($attributes['class']) {
 				$custom_class = $attributes['class'];
 			}
